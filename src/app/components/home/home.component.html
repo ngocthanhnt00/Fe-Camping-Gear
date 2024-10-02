@@ -1,0 +1,386 @@
+<section>
+  <div class="slider">
+    <div class="list">
+      <div class="item">
+
+        <img src="./assets/images/bannerheading.webp" alt="">
+      </div>
+      <div class="item">
+        <img src="./assets/images/bannerheading1.webp" alt="">
+      </div>
+      <div class="item">
+        <img src="./assets/images/bannerheading3.webp" alt="">
+      </div>
+      <div class="item">
+        <img src="./assets/images/bannerheading4.webp" alt="">
+      </div>
+      <div class="item">
+        <img src="./assets/images/bannerheading5.webp" alt="">
+      </div>
+    </div>
+    <!-- buttons next and prev -->
+    <div class="buttons">
+      <button id="prev">
+        < </button>
+          <button id="next">></button>
+    </div>
+    <!-- dots if(n item => n dots)  -->
+    <ul class="dots">
+      <li class="active"></li>
+      <li></li>
+      <li></li>
+      <li></li>
+      <li></li>
+    </ul>
+  </div>
+
+  <div class="menu-main wide">
+    <ul class="name-product">
+      <li class="has-child" *ngFor="let category of categories">
+        <a href="" title="{{category.name}}">
+          <img src="http://localhost:5032/images/{{category.icon}}" alt="">
+          <span>{{category.name}}</span>
+        </a>
+      </li>
+      <!-- <li class="has-child">
+        <a href="" title="Đồ phượt xe máy xe đạp">
+          <img src="./assets/images/iconbike.webp" alt="">
+          <span>Đồ phượt xe máy xe đạp</span>
+        </a>
+      </li>
+      <li class="has-child">
+        <a href="" title="Trang phục dã ngoại">
+          <img src="./assets/images/iconAoKhoac.webp" alt="">
+          <span>Trang phục dã ngoại</span>
+        </a>
+      </li>
+      <li class="has-child">
+        <a href="" title="Giày dép">
+          <img src="./assets/images/icongiay.webp" alt="">
+          <span>Giày dép</span>
+        </a>
+      </li>
+      <li class="has-child">
+        <a href="" title="Ba lô & Túi du lịch">
+          <img src="./assets/images/iconbalo.webp" alt="">
+          <span>Ba lô & Túi du lịch</span>
+        </a>
+      </li>
+      <li class="has-child">
+        <a href="" title="Điện tử - Công nghệ">
+          <img src="./assets/images/icondenpin.webp" alt="">
+          <span>Điện tử - Công nghệ</span>
+        </a>
+      </li>
+      <li class="has-child">
+        <a href="" title="Dao và công cụ">
+          <img src="./assets/images/icondao.webp" alt="">
+          <span>Dao và công cụ</span>
+        </a>
+      </li>
+      <li class="has-child">
+        <a href="./SliderDInhCao/Slider/index.html" title="Thể thao dưới nước">
+          <img src="./assets/images/iconthethaonuoc.webp" alt="">
+          <span>Thể thao dưới nước</span>
+        </a>
+      </li> -->
+
+    </ul>
+  </div>
+</section>
+<main>
+  <div class="main-content" name="one">
+    <div class="product-super-list wide">
+      <div class="view-heading-recently wide">Sản phẩm bán chạy nhất</div>
+      <div class="cart2">
+        <div class="list-products2">
+          <!-- <img src="./assets/images/scaleBaloLeonuii.webp" alt=""> -->
+          <!-- Show Product form database -->
+          <div class="product2" *ngFor="let product of products">
+            <div class="image-product">
+              <a [routerLink]="['/product-detail', product._id]">
+                <img src="http://localhost:5032/images/{{product.img}}" alt="">
+              </a>
+            </div>
+            <div class="product-info" [attr.name]="product._id">
+              <div class="btn-add">
+                <button click="addToCart(product._id)" class="addCart"><i class="fa-solid fa-cart-shopping fa-lg"
+                    style="color: #fff;"></i></button>
+                <button click="pretty(product._id)" class="pretty"><i class="fa-solid fa-heart fa-lg"
+                    style="color: #fff;"></i></button>
+                <button click="options(product._id)" class="options"><i class="fa-solid fa-gear fa-lg"
+                    style="color: #fff;"></i></button>
+              </div>
+              <div class="product-vendor text-center">
+                <span>
+                  <a href="">{{product.brand}}</a>
+                </span>
+              </div>
+              <div class="product-name text-center">
+                <h3 class="cart-title">
+                  <a href="#">{{product.name}}</a>
+                </h3>
+              </div>
+              <div class="stars text-center">
+                <ng-container *ngFor="let star of [].constructor(5); let i = index">
+                  <i class="fa-star" [ngClass]="{'fa-solid': i < product.star, 'fa-regular': i >= product.star}"
+                    style="color: #50c252;"></i>
+                </ng-container>
+              </div>
+
+              <div class="price">
+                <div class="price-new {{product.priceNew === 0 ? 'none' : ''}}">
+                  {{product.priceNew.toLocaleString("vi-VN")}}đ</div>
+                <div class="price-old">
+                  {{product.priceOld.toLocaleString("vi-VN")}}đ</div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+      <div class="button-prod">
+        <button
+          style="padding: 20px; display: flex; justify-content: center; align-items: center; border-radius: 50%; width: 10px; height: 10px;"
+          class="next">
+          >
+        </button>
+        <button
+          style="padding: 20px; display: flex; justify-content: center; align-items: center; border-radius: 50%; width: 10px; height: 10px;"
+          class="prev">
+          < </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="main-content" name="two">
+    <div class="product-super-list wide">
+      <div class="view-heading-recently">Sản phẩm xem gần đây</div>
+      <div class="cart">
+        <div class="list-products">
+          <!-- <img src="./assets/images/scaleBaloLeonuii.webp" alt=""> -->
+          <!-- Show Product form database -->
+          <div class="product" *ngFor="let product of products">
+            <div class="image-product">
+              <a [routerLink]="['/product-detail', product._id]">
+                <img src="http://localhost:5032/images/{{product.img}}" alt="">
+              </a>
+            </div>
+            <div class="product-info" [attr.name]="product._id">
+              <div class="btn-add">
+                <button click="addToCart(product._id)" class="addCart"><i class="fa-solid fa-cart-shopping fa-lg"
+                    style="color: #fff;"></i></button>
+                <button click="pretty(product._id)" class="pretty"><i class="fa-solid fa-heart fa-lg"
+                    style="color: #fff;"></i></button>
+                <button click="options(product._id)" class="options"><i class="fa-solid fa-gear fa-lg"
+                    style="color: #fff;"></i></button>
+              </div>
+              <div class="product-vendor text-center">
+                <span>
+                  <a href="">{{product.brand}}</a>
+                </span>
+              </div>
+              <div class="product-name text-center">
+                <h3 class="cart-title">
+                  <a href="#">{{product.name}}</a>
+                </h3>
+              </div>
+              <div class="stars text-center">
+                <ng-container *ngFor="let star of [].constructor(5); let i = index">
+                  <i class="fa-star" [ngClass]="{'fa-solid': i < product.star, 'fa-regular': i >= product.star}"
+                    style="color: #50c252;"></i>
+                </ng-container>
+              </div>
+
+              <div class="price">
+                <div class="price-new {{product.priceNew === 0 ? 'none' : ''}}">
+                  {{product.priceNew.toLocaleString("vi-VN")}}đ</div>
+                <div class="price-old">
+                  {{product.priceOld.toLocaleString("vi-VN")}}đ</div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="main-content" name="three">
+    <div class="product-super-list wide">
+      <div class="row-heading">
+        <div class="view-heading-recently wide">Sản Phẩm Khuyến Mãi</div>
+        <div class="view-all">Xem tất cả ></div>
+      </div>
+      <div class="cart3">
+        <div class="list-products3">
+          <div class="cart3">
+            <div class="list-products2">
+              <!-- <img src="./assets/images/scaleBaloLeonuii.webp" alt=""> -->
+              <!-- Show Product form database -->
+              <div class="product2" *ngFor="let product of products">
+                <div class="image-product">
+                  <a [routerLink]="['/product-detail', product._id]">
+                    <img src="http://localhost:5032/images/{{product.img}}" alt="">
+                  </a>
+                </div>
+                <div class="product-info" [attr.name]="product._id">
+                  <div class="btn-add">
+                    <button click="addToCart(product._id)" class="addCart"><i class="fa-solid fa-cart-shopping fa-lg"
+                        style="color: #fff;"></i></button>
+                    <button click="pretty(product._id)" class="pretty"><i class="fa-solid fa-heart fa-lg"
+                        style="color: #fff;"></i></button>
+                    <button click="options(product._id)" class="options"><i class="fa-solid fa-gear fa-lg"
+                        style="color: #fff;"></i></button>
+                  </div>
+                  <div class="product-vendor text-center">
+                    <span>
+                      <a href="">{{product.brand}}</a>
+                    </span>
+                  </div>
+                  <div class="product-name text-center">
+                    <h3 class="cart-title">
+                      <a href="#">{{product.name}}</a>
+                    </h3>
+                  </div>
+                  <div class="stars text-center">
+                    <ng-container *ngFor="let star of [].constructor(5); let i = index">
+                      <i class="fa-star" [ngClass]="{'fa-solid': i < product.star, 'fa-regular': i >= product.star}"
+                        style="color: #50c252;"></i>
+                    </ng-container>
+                  </div>
+
+                  <div class="price">
+                    <div class="price-new {{product.priceNew === 0 ? 'none' : ''}}">
+                      {{product.priceNew.toLocaleString("vi-VN")}}đ</div>
+                    <div class="price-old">
+                      {{product.priceOld.toLocaleString("vi-VN")}}đ</div>
+                  </div>
+
+                </div>
+              </div>
+
+            </div>
+
+
+
+          </div>
+
+        </div>
+
+
+
+      </div>
+      <div class="button-prod">
+        <button
+          style="padding: 20px; display: flex; justify-content: center; align-items: center; border-radius: 50%; width: 10px; height: 10px;"
+          class="next3">
+          >
+        </button>
+        <button
+          style="padding: 20px; display: flex; justify-content: center; align-items: center; border-radius: 50%; width: 10px; height: 10px;"
+          class="prev3">
+          < </button>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="main-content" id="sale-bg">
+    <div class="product-super-list wide">
+      <div class="row-heading">
+        <div class="view-heading-recently wide">Ưu đãi</div>
+        <div class="view-all">Xem tất cả ></div>
+      </div>
+      <div class="sale-banners">
+        <div class="sale-banner">
+          <div class="banner">
+            <img src="./assets/images/bannerbinhnuoc.jpg" alt="">
+          </div>
+          <div class="banner">
+            <img src="./assets/images/bannercamping.png" alt="">
+          </div>
+          <div class="banner">
+            <img src="./assets/images/banner2.webp" alt="">
+          </div>
+          <div class="banner">
+            <img src="./assets/images/banner3.webp" alt="">
+          </div>
+          <div class="banner">
+            <img src="./assets/images/banner4.webp" alt="">
+          </div>
+          <div class="banner">
+            <img src="./assets/images/bannerheading1.webp" alt="">
+          </div>
+          <div class="banner">
+            <img src="./assets/images/banner.webp" alt="">
+          </div>
+          <div class="banner">
+            <img src="./assets/images/bannerheading4.webp" alt="">
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="wide">
+      <div class="branding wide">Shopping theo thương hiệu</div>
+      <div class="list-brand">
+        <div class="product-brand">
+          <div class="item-brand">
+            <a href="">
+              <img src="./assets/images/bradingMaxFox.webp" alt="">
+            </a>
+          </div>
+          <div class="item-brand">
+            <a href="">
+              <img src="./assets/images/bradingHanagal.png" alt="">
+            </a>
+          </div>
+          <div class="item-brand">
+            <a href="">
+              <img src="./assets/images/bradingLeatherman.webp" alt="">
+            </a>
+          </div>
+          <div class="item-brand">
+            <a href="">
+              <img src="./assets/images/brandingMorakill.png" alt="">
+            </a>
+          </div>
+          <div class="item-brand">
+            <a href="">
+              <img src="./assets/images/brandGetber.webp" alt="">
+            </a>
+          </div>
+          <div class="item-brand">
+            <a href="">
+              <img src="./assets/images/bradingBlackdog.webp" alt="">
+            </a>
+          </div>
+          <div class="item-brand">
+            <a href="">
+              <img src="./assets/images/BrandingNaturalHike.webp" alt="">
+            </a>
+          </div>
+          <div class="item-brand">
+            <a href="">
+              <img src="./assets/images/BrandingVictoriox.webp" alt="">
+            </a>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+</main>

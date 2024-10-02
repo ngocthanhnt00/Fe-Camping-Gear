@@ -1,0 +1,92 @@
+<header>
+  <div class="top">
+    <ul class="requiment wide">
+      <li><a href="./src/tuyendung.html" title="Tuyển dụng">Tuyển dụng</a></li>
+      <li><a href="" title="Liên hệ">Liên hệ</a></li>
+      <li>
+        <div class="language">
+          <select name="" id="options">
+            <option selected value="">Chọn ngôn ngữ</option>
+            <option value="">Việt Nam</option>
+            <option value="">English</option>
+            <option value="">Tiếng Trung</option>
+          </select>
+        </div>
+      </li>
+    </ul>
+
+  </div>
+  <div class="bottom-list">
+    <div class="bottom wide">
+      <div class="logo">
+        <a routerLink="/" title="FanFan" id="logoImage">
+          <img src="./assets/images/logo.webp" alt="">
+        </a>
+      </div>
+      <div class="item-header">
+        <div class="search-input">
+          <input autocomplete="off" type="te-searchxt" name="" id="search-products" placeholder="Tìm kiếm"><i
+            class="fa-solid fa-magnifying-glass" style="color: #000000ce;"></i>
+          <!-- * Search Products -->
+          <div class="search-input-product wide">
+            <div class="smart-wrapper-search">
+              <div class="search-left">
+
+
+
+
+
+              </div>
+
+              <!-- <div class="search-right">
+              <h2>Sản phẩm bạn tìm hiện không tìm thấy</h2>
+                           </div> -->
+            </div>
+          </div>
+          <!-- * End  Search Products -->
+        </div>
+
+        <div class="right-header">
+          <a href="#" class="blog" title="Blog">
+            <img src="./assets/images/iconBlog.webp" alt="">
+            <span>Blog</span>
+          </a>
+          <a href="./sale.html" class="blog" title="Khuyến mãi">
+            <img src="./assets/images/give.webp" alt="">
+            <span>Khuyến mãi</span>
+          </a>
+          <a data-cart-counter="0" routerLink="/cart" class="blog cart" title="Giỏ hàng">
+            <img src="https://theme.hstatic.net/200000467803/1000988268/14/icon-cart.svg?v=435" alt="">
+            <span>Giỏ hàng</span>
+          </a>
+          <ng-container *ngIf="userExist; else loginTemplate">
+
+            <a routerLink="/login" class="blog" title="Đăng nhập">
+              <img src="https://theme.hstatic.net/200000467803/1000988268/14/icon-user.svg?v=774" alt="">
+              <span style="color: #51b848;">Đăng nhập</span>
+            </a>
+          </ng-container>
+
+          <ng-template #loginTemplate>
+            <div class="header-account dropdown blog login">
+              <a href="/account" title="Tài khoản" class=" flex">
+                <div class="avatar" [ngStyle]="{ 'background-color': getRandomColor() }">
+                  {{ getInitials(userName) }}
+                </div>
+                <span>Nguyễn Thanh</span>
+                <div class="dropdown-content">
+                  <a class="droplist" href="#">Profile</a>
+                  <a class="droplist" href="#">Setting</a>
+                  <a href="" class="droplist signout" (click)="signOut()">Sign out</a>
+                </div>
+              </a>
+            </div>
+          </ng-template>
+          <!--  -->
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+</header>

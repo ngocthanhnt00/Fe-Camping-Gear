@@ -1,0 +1,264 @@
+<app-pageAdmin></app-pageAdmin>
+<main class="app-content">
+  <div class="app-title">
+    <ul class="app-breadcrumb breadcrumb side">
+      <li class="breadcrumb-item active"><a href="#"><b>Danh sách sản phẩm</b></a></li>
+    </ul>
+    <div id="clock"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
+          <div class="row element-button">
+            <div class="col-sm-2">
+              <button (click)="formAddProduct()" style="background-color: #9df99d ; color: #000;" class="btn btn-sm"
+                id="openAddPage" title="Thêm"><i class="fas fa-plus"></i>
+                Tạo mới sản phẩm </button>
+            </div>
+
+          </div>
+          <table class="table table-hover table-bordered" id="sampleTable">
+            <thead>
+              <tr>
+                <th style="width: 5%;">Mã sản phẩm</th>
+                <th style="width: 25%;">Tên sản phẩm</th>
+                <th>Ảnh</th>
+                <th>Đánh giá</th>
+                <th>Giá gốc</th>
+                <th>Giá sale</th>
+                <th>Danh mục</th>
+                <th>Chức năng</th>
+              </tr>
+            </thead>
+            <tbody style="text-align: center;">
+              <tr *ngFor="let product of products">
+                <td>{{product._id}}</td>
+                <td>{{product.name}}</td>
+                <td><img src="http://localhost:5032/images/{{product.img}}" alt="{{product.img}}" width="100px;"></td>
+                <td>{{product.star}} <i class="fas fa-star" style="color: #FFD43B;"></i>
+                </td>
+                <td>{{product.priceOld.toLocaleString('vi-VN')}}đ</td>
+                <td>{{product.priceNew.toLocaleString('vi-VN')}} đ</td>
+                <td>{{product.categoryId.name}}</td>
+                <td>
+                  <button (click)="formUpdateProduct(product._id.toString())" style="color: rgb(245 157 57)"
+                    class="b~tn btn-primary btn-sm trash delProd" data-id="66a5209b0c3dad28eb54e838" type="button"
+                    title="Sửa"><i class="fas fa-edit openEditPage" data-id="66a5209b0c3dad28eb54e838" id="show-emp"
+                      data-toggle="modal" data-target="#ModalUP"></i></button>
+                  <button (click)="deleteProduct(product._id.toString())" class="btn btn-primary btn-sm trash delProd"
+                    data-id="66a5209b0c3dad28eb54e838" type="button" title="Xóa"><i class="fas fa-trash-alt delProd"
+                      data-id="66a5209b0c3dad28eb54e838"></i></button>
+                </td>
+
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+<!--ADD MODAL -->
+<div id="myModal" class="modal">
+  <div class="modal-container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <h3 class="tile-title">Tạo mới sản phẩm</h3>
+          <div class="tile-body">
+            <form id="addProductForm" class="row" [formGroup]="productForm" (ngSubmit)="addProduct()">
+              <div class=" form-group col-md-12">
+                <label class="control-label">Tên sản phẩm</label>
+                <input formControlName="name" class="form-control" id="name" type="text">
+                <small class="error" *ngIf="!productForm.get('name')?.valid && productForm.get('name')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="control-label">Thương hiệu</label>
+                <input formControlName="brand" class="form-control" id="brand" type="text">
+                <small class="error" *ngIf="!productForm.get('brand')?.valid && productForm.get('brand')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="control-label">Số lượng</label>
+                <input formControlName="quantity" class="form-control" id="quantity" type="number">
+                <small class="error"
+                  *ngIf="!productForm.get('quantity')?.valid && productForm.get('quantity')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="control-label">Đánh giá</label>
+                <input formControlName="star" class="form-control" id="star" type="number">
+                <small class="error" *ngIf="!productForm.get('star')?.valid && productForm.get('star')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <!-- <div class="form-group  col-md-3">
+                              <label class="control-label">Số lượng</label>
+                              <input class="form-control" id="quantity" type="number">
+                          </div> -->
+              <div class="form-group col-md-6">
+                <label class="control-label">Giá gốc</label>
+                <input formControlName="priceOld" class="form-control" id="price-old" type="text">
+                <small class="error"
+                  *ngIf="!productForm.get('priceOld')?.valid && productForm.get('priceOld')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-6">
+                <label class="control-label">Giá sale</label>
+                <input formControlName="priceNew" class="form-control" id="price-new" type="text">
+                <small class="error"
+                  *ngIf="!productForm.get('priceNew')?.valid && productForm.get('priceNew')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="control-label">Mô tả sản phẩm</label>
+                <br>
+                <textarea style="width: 100%;" rows="4" formControlName="description" id="description">
+
+                </textarea>
+                <small class="error"
+                  *ngIf="!productForm.get('description')?.valid && productForm.get('description')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="control-label">Danh mục</label>
+                <select class="form-control" id="category" formControlName="nameCategory">
+                  <option *ngFor="let category of categories" [ngValue]="category._id">
+                    {{ category.name }}
+                  </option>
+                </select>
+                <small class="error"
+                  *ngIf="!productForm.get('nameCategory')?.valid && productForm.get('nameCategory')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="control-label">Ảnh sản phẩm</label>
+                <div id="myfileupload">
+                  <input type="file" id="img" formControlName="img" />
+                </div>
+                <small class="error" *ngIf="!productForm.get('img')?.valid && productForm.get('img')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <!-- <div class="form-group col-md-12">
+                              <label class="control-label">Mô tả sản phẩm</label>
+                              <textarea class="form-control" name="mota" id="description"></textarea>
+                          </div> -->
+              <button class="btn btn-secondary">Hủy bỏ</button>
+              <button type="submit" class="btn btn-primary" id="saveAddProduct">Thêm</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--EDIT MODAL -->
+<div id="myEditModal" class="modal">
+  <div class="modal-container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <h3 class="tile-title">Cập nhật sản phẩm</h3>
+          <div class="tile-body">
+            <form id="editProductForm" class="row" [formGroup]="productFormEdit"
+              (ngSubmit)="updateProduct(selectedProduct._id)">
+              <div class="form-group col-md-12">
+                <label class="control-label">Tên sản phẩm</label>
+                <input formControlName="name" class="form-control" id="name-edit" type="text">
+                <small class="error"
+                  *ngIf="!productFormEdit.get('name')?.valid && productFormEdit.get('name')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="control-label">Thương hiệu</label>
+                <input formControlName="brand" class="form-control" id="brand-edit" type="text">
+                <small class="error"
+                  *ngIf="!productFormEdit.get('brand')?.valid && productFormEdit.get('brand')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="control-label">Số lượng</label>
+                <input formControlName="quantity" class="form-control" id="quantity-edit" type="number">
+                <small class="error"
+                  *ngIf="!productFormEdit.get('quantity')?.valid && productFormEdit.get('quantity')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-4">
+                <label class="control-label">Đánh giá</label>
+                <input formControlName="star" class="form-control" id="star-edit" type="number">
+                <small class="error"
+                  *ngIf="!productFormEdit.get('star')?.valid && productFormEdit.get('star')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+
+              <div class="form-group col-md-6">
+                <label class="control-label">Giá gốc</label>
+                <input formControlName="priceOld" class="form-control" id="price-old-edit" type="text">
+                <small class="error"
+                  *ngIf="!productFormEdit.get('priceOld')?.valid && productFormEdit.get('priceOld')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-6">
+                <label class="control-label">Giá sale</label>
+                <input formControlName="priceNew" class="form-control" id="price-new-edit" type="text">
+                <small class="error"
+                  *ngIf="!productFormEdit.get('priceNew')?.valid && productFormEdit.get('priceNew')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="control-label">Mô tả sản phẩm</label>
+                <br>
+                <textarea style="width: 100%;" rows="4" formControlName="description" id="description-edit"></textarea>
+                <small class="error"
+                  *ngIf="!productFormEdit.get('description')?.valid && productFormEdit.get('description')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="control-label">Danh mục</label>
+                <select class="form-control" id="category-edit" formControlName="nameCategory">
+                  <option *ngFor="let category of categories" [ngValue]="category._id.toString()">
+                    {{ category.name }}
+                  </option>
+                </select>
+                <small class="error"
+                  *ngIf="!productFormEdit.get('nameCategory')?.valid && productFormEdit.get('nameCategory')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="control-label">Ảnh sản phẩm</label>
+                <div id="myfileupload">
+                  <input type="file" id="img-edit" />
+                </div>
+              </div>
+              <div class="showImg form-group col-md-12">
+                <img src="http://localhost:5032/images/{{selectedProduct.img}}" alt="" width="120">
+              </div>
+              <br>
+              <button class="btn btn-secondary-edit">Hủy bỏ</button>
+              <button class="btn btn-primary" id="saveEditProduct" type="submit">Lưu</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

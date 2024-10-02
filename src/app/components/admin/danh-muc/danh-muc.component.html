@@ -1,0 +1,218 @@
+<app-pageAdmin></app-pageAdmin>
+<main class="app-content">
+  <div class="app-title">
+    <ul class="app-breadcrumb breadcrumb side">
+      <li class="breadcrumb-item active"><a href="#"><b>Danh sách danh mục</b></a></li>
+    </ul>
+    <div id="clock"></div>
+  </div>
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <div class="tile-body">
+          <div class="row element-button">
+            <div class="col-sm-2">
+              <button (click)="formAddCategory()" style="background-color: #9df99d ; color: #000;" class="btn btn-sm"
+                id="openAddCate" title="Thêm"><i class="fas fa-plus"></i>
+                Tạo mới danh mục</button>
+            </div>
+            <!-- <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm nhap-tu-file" type="button" title="Nhập" onclick="myFunction(this)"><i
+                                class="fas fa-file-upload"></i> Tải từ file</a>
+                          </div>
+
+                          <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm print-file" type="button" title="In" onclick="myApp.printTable()"><i
+                                class="fas fa-print"></i> In dữ liệu</a>
+                          </div>
+                          <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm print-file js-textareacopybtn" type="button" title="Sao chép"><i
+                                class="fas fa-copy"></i> Sao chép</a>
+                          </div>
+
+                          <div class="col-sm-2">
+                            <a class="btn btn-excel btn-sm" href="" title="In"><i class="fas fa-file-excel"></i> Xuất Excel</a>
+                          </div>
+                          <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm pdf-file" type="button" title="In" onclick="myFunction(this)"><i
+                                class="fas fa-file-pdf"></i> Xuất PDF</a>
+                          </div>
+                          <div class="col-sm-2">
+                            <a class="btn btn-delete btn-sm" type="button" title="Xóa" onclick="myFunction(this)"><i
+                                class="fas fa-trash-alt"></i> Xóa tất cả </a>
+                          </div> -->
+          </div>
+          <table class="table table-hover table-bordered" id="sampleTable">
+            <thead>
+              <tr>
+                <th style="width: 20%;">Mã danh mục</th>
+                <th style="width: 15%;">Tên danh mục</th>
+                <th style="width: 20%;">Icon</th>
+                <th>Mô tả</th>
+                <th style="width: 10%;">Chức năng</th>
+              </tr>
+            </thead>
+            <tbody id="cate">
+              <tr *ngFor="let category of categories">
+                <td>{{category._id}}</td>
+                <td>{{category.name}}</td>
+                <td style="width: 10%">
+                  <img width="60" src="http://localhost:5032/images/{{category.icon}}" alt="">
+                </td>
+                <td>{{category.description}}</td>
+                <td>
+                  <button (click)="formUpdateCategory(category._id)" style="color: rgb(245 157 57)"
+                    class="btn btn-primary btn-sm trash delCate" data-id="66ebbccaf0c70b7ed305d340" type="button"
+                    title="Xóa"><i class="fas fa-edit" data-id="66ebbccaf0c70b7ed305d340" id="show-emp"
+                      data-toggle="modal" data-target="#ModalUP"></i></button>
+                  <button (click)="deleteCategory(category._id)" style="color: #de0400"
+                    class="btn btn-primary btn-sm trash delCate" data-id="66ebbccaf0c70b7ed305d340" type="button"
+                    title="Xóa"><i class="fas fa-trash-alt delcated" data-id="66ebbccaf0c70b7ed305d340"></i></button>
+                </td>
+
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</main>
+
+<!--MODAL-->
+<div class="modal fade" id="ModalUP" tabindex="-1" role="dialog" aria-hidden="true" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+
+      <div id="editModal">
+
+      </div>
+      <div class="modal-footer">
+      </div>
+    </div>
+  </div>
+</div>
+<!--MODAL-->
+<!-- MODAL ADD -->
+<div id="addModalCate" class="modal">
+
+  <div class="modal-container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <h3 class="tile-title">Tạo mới danh mục</h3>
+          <div class="tile-body">
+            <form class="row" [formGroup]="categoryForm" (ngSubmit)="addCategory()">
+              <div class="form-group col-md-12">
+                <label class="control-label">Tên danh mục</label>
+                <input formControlName="name" class="form-control" id="nameCate" type="text">
+                <small class="error" *ngIf="!categoryForm.get('name')?.valid && categoryForm.get('name')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class=" form-group col-md-12">
+                <label class="control-label">Icon</label>
+                <input formControlName="icon" class="form-control" id="iconCate" type="file">
+                <small class="error" *ngIf="!categoryForm.get('icon')?.valid && categoryForm.get('icon')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="control-label">Mô tả danh mục</label>
+                <input formControlName="description" class="form-control" id="descriptionCate" />
+              </div>
+              <button class="btn btn-cancel">Hủy bỏ</button>
+              <button type="submit" class="btn btn-save" id="addCate">Thêm</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</div>
+<div id="editModalCate" *ngIf="selectedCategory" class="modal">
+  <div class="modal-container">
+    <div class="row">
+      <div class="col-md-12">
+        <div class="tile">
+          <h3 class="tile-title">Chỉnh sửa danh mục</h3>
+          <div class="tile-body">
+            <form class="row" [formGroup]="categoryFormEdit" (ngSubmit)="updateCategory(selectedCategory._id)">
+              <div class=" form-group col-md-5">
+                <label class="control-label">ID</label>
+                <input formControlName="_id" class="form-control" id="idCate-edit" name="idCate-edit" type="text">
+              </div>
+              <div class="form-group col-md-7">
+                <label class="control-label">Tên danh mục</label>
+                <input formControlName="name" class="form-control" id="nameCate-edit" name="nameCate-edit" type="text">
+                <small class="error"
+                  *ngIf="!categoryFormEdit.get('name')?.valid && categoryFormEdit.get('name')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="control-label">Icon</label>
+                <input class="form-control" id="iconCate-edit" name="iconCate-edit" type="file">
+              </div>
+              <div class="form-group col-md-12">
+                <div class="showIcon">
+                  <img [src]="selectedCategory.iconUrl" width="50">
+                </div>
+              </div>
+              <div class="form-group col-md-12">
+                <label class="control-label">Mô tả danh mục</label>
+                <input formControlName="description" class="form-control" id="desCate-edit" name="desCate-edit">
+                <small class="error"
+                  *ngIf="!categoryFormEdit.get('description')?.valid && categoryFormEdit.get('description')?.touched">
+                  Vui lòng nhập trường này
+                </small>
+              </div>
+              <button class="btn btn-cancel btn-cancel-cate">Hủy bỏ</button>
+              <button class="btn btn-save btn-save-cate" id="saveCate">Lưu</button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- <div class="modal" *ngIf="isModalVisible" id="editModalCate">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="tile">
+        <h3 class="tile-title">Tạo mới danh mục</h3>
+        <div class="tile-body">
+          <form class="row">
+            <div class="form-group col-md-5">
+              <label class="control-label">ID</label>
+              <input [(ngModel)]="selectedCategory._id" class="form-control" id="idCate-edit" type="text">
+            </div>
+            <div class="form-group col-md-7">
+              <label class="control-label">Tên danh mục</label>
+              <input [(ngModel)]="selectedCategory.name" class="form-control" id="nameCate-edit" type="text">
+            </div>
+            <div class="form-group col-md-12">
+              <label class="control-label">Icon</label>
+              <input class="form-control" id="iconCate-edit" type="file">
+            </div>
+            <div class="form-group col-md-12">
+              <div class="showIcon">
+                <img [src]="selectedCategory.iconUrl" width="50">
+              </div>
+            </div>
+            <div class="form-group col-md-12">
+              <label class="control-label">Mô tả danh mục</label>
+              <input [(ngModel)]="selectedCategory.description" class="form-control" id="desCate-edit">
+            </div>
+          </form>
+          <button class="btn btn-cancel btn-cancel-cate" (click)="closeModal()">Hủy bỏ</button>
+          <button class="btn btn-save btn-save-cate" (click)="saveCategory()">Lưu</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->
