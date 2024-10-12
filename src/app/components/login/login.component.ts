@@ -43,9 +43,9 @@ export class LoginComponent implements OnInit {
             if (user.role === 1) { // Nếu là user
               // this.userSessionService.setSessionCart(cart)
               this.userSessionService.getData();
-              window.location.href = "/home"
+              location.assign('/')
             } else if (user.role === 2) { // Nếu là admin
-              this.router.navigate(['/admin1']);
+              location.assign("/admin1")
             }
             console.log(token, refreshToken, user);
             break;

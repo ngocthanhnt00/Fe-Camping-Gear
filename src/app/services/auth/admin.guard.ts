@@ -1,9 +1,9 @@
 import { CanActivateFn } from '@angular/router';
 import { inject } from '@angular/core';
 import { Router } from '@angular/router';
-import { AuthService } from './auth.service';
+import { AuthService } from '../auth.service';
 
-export const authGuard: CanActivateFn = async (route, state) => {
+export const adminGuard: CanActivateFn = async (route, state) => {
   const authService = inject(AuthService);
   const router = inject(Router); // Inject Router
 
@@ -14,7 +14,15 @@ export const authGuard: CanActivateFn = async (route, state) => {
   // Kiểm tra token đã hết hạn chưa
   if (!authService.isTokenExpired()) {
     console.warn("Token is valid");
-    return true; // Token hợp lệ, cho phép truy cập
+    const user = localStorage.getItem("user");
+    const role = user ? JSON.parse(user).role : 1;
+    if (role == 2) {
+      return true
+    } else {
+      location.assign("/")
+      return false
+    }
+    // return true; // Token hợp lệ, cho phép truy cập
   } else {
     console.warn("Token is expired, attempting to refresh token...");
 
@@ -32,9 +40,15 @@ export const authGuard: CanActivateFn = async (route, state) => {
         const { accessToken } = refreshTokenResult;
         localStorage.setItem('token', accessToken);
         console.warn("Token refreshed and saved:", accessToken);
-
+        const user = localStorage.getItem("user");
+        const role = user ? JSON.parse(user).role : 1;
+        if (role == 2) {
+          return true
+        } else {
+          location.assign("/")
+          return false
+        }
         // Tiếp tục truy cập vì token đã được làm mới
-        return true;
       } else {
         console.warn("Refresh token is not valid, redirecting to login");
         router.navigate(['/login']);

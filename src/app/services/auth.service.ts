@@ -68,14 +68,4 @@ export class AuthService {
     return isExpired
   }
 
-  // Hàm kiểm tra token và điều hướng về trang login nếu hết hạn
-  // checkTokenAndRedirect() {
-  //   if (this.isTokenExpired()) {
-  //     // Nếu token hết hạn, chuyển hướng về trang login
-  //     console.log('Token đã hết hạn, chuyển về trang đăng nhập');
-  //     this.router.navigate(['/login']);
-  //   }
-  // }
-
-
 }

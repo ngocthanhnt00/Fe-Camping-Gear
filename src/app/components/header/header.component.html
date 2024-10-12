@@ -41,14 +41,14 @@
                   <div class="infor">
                     <div class="infor-title">{{product.name}}</div>
                     <div class="infor-price">
-                      <div class="price-new-search">{{product.priceNew.toLocateString()}}</div>
-                      <div class="price-old-search ">{{product.priceOld.toLocateString()}}</div>
+                      <div class="price-new-search">{{product.priceNew.toLocaleString()}}đ</div>
+                      <div class="price-old-search ">{{product.priceOld.toLocaleString()}}đ</div>
                     </div>
                   </div>
                 </div>
               </div>
 
-              <div class="search-right">
+              <div class="search-right" *ngIf="searchResults.length === 0">
                 <h4>Sản phẩm bạn tìm hiện không tìm thấy</h4>
               </div>
             </div>

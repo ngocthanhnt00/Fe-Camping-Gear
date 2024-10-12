@@ -27,8 +27,10 @@ import { LandingpageComponent } from './components/admin/landingpage/landingpage
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
-import { authGuard } from './services/auth.guard';
+import { authGuard } from './services/auth/auth.guard';
 import { UserSessionService } from './services/user-session.service';
+import { adminGuard } from './services/auth/admin.guard';
+import { QueryCategoryComponent } from './components/query-category/query-category.component';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
@@ -37,9 +39,10 @@ const routes: Routes = [
   { path: 'product-detail/:id', component: ProductDetailComponent, canActivate: [authGuard] },
   { path: 'products-list', component: ProductsListComponent },
   { path: 'super', component: SuperComponent },
-  { path: 'admin', component: PageAdminComponent, canActivate: [authGuard] },
-  { path: 'admin1', component: DanhMucComponent, },
-  { path: 'admin2', component: SanPhamComponent, },
+  { path: 'category/:id', component: QueryCategoryComponent },
+  { path: 'admin', component: PageAdminComponent, canActivate: [adminGuard] },
+  { path: 'admin1', component: DanhMucComponent, canActivate: [adminGuard] },
+  { path: 'admin2', component: SanPhamComponent, canActivate: [adminGuard] },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
 ]
 @NgModule({

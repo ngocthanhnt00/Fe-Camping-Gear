@@ -37,7 +37,7 @@
   <div class="menu-main wide">
     <ul class="name-product">
       <li class="has-child" *ngFor="let category of categories">
-        <a href="" title="{{category.name}}">
+        <a href="/category/{{category._id}}" title="{{category.name}}">
           <img src="http://localhost:5032/images/{{category.icon}}" alt="">
           <span>{{category.name}}</span>
         </a>
