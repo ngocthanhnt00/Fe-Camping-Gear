@@ -1,4 +1,10 @@
 import { Component, OnInit, AfterViewChecked } from '@angular/core';
+import { ProductsService } from 'src/app/services/products.service';
+import { UserSessionService } from 'src/app/services/user-session.service';
+import { forkJoin } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { CartService } from 'src/app/services/cart.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-cart',
@@ -6,12 +12,57 @@ import { Component, OnInit, AfterViewChecked } from '@angular/core';
   styleUrls: ['./cart.component.css']
 })
 export class CartComponent implements OnInit {
+  public carts: any = [];
+  constructor(private userSessionService: UserSessionService, private header: HeaderComponent, private cartService: CartService, private productService: ProductsService) { }
 
-  constructor() { }
 
   ngOnInit() {
+    this.initCart();
   }
+  initCart() {
+    const getCarts: any = this.userSessionService.getInitialCart();
+    console.log('cart', getCarts);
 
+    if (getCarts && getCarts.length > 0) {
+      const requests = getCarts.map((item: any) => {
+        console.log("item", item);
+        return this.productService.get(item.productId).pipe(
+          map(data => {
+            console.log("hello cac ban. Minh la Thanh day");
+            console.log('data result', data.result);
+            return { ...data.result, ordered: `${Number(item.quantity)}` }; // Thêm thuộc tính mới
+          })
+        );
+      });
+
+      // Sử dụng forkJoin để chờ tất cả các yêu cầu hoàn thành
+      forkJoin(requests).subscribe((results: any) => {
+        this.carts = []
+        this.carts.push(...results); // Thêm tất cả kết quả vào mảng carts
+        console.warn("carts: ", this.carts); // In ra giá trị của carts sau khi đã cập nhật
+      });
+    }
+  }
+  removeItem(id: string) {
+    this.cartService.delete(id).subscribe((res) => {
+      if (res) {
+        console.log("Ressss:", res);
+
+        // Xóa sản phẩm khỏi local storage
+        let currentCart = this.userSessionService.getInitialCart();
+        currentCart = currentCart.filter((item: any) => item.productId !== id);
+        this.userSessionService.setSessionCart(currentCart);
+
+        // Xóa sản phẩm khỏi mảng carts mà không reload lại trang
+        this.carts = this.carts.filter((item: any) => item._id !== id);
+
+        // Gọi cập nhật header
+        this.header.updateCart();
+
+        alert("Xoá thành công");
+      }
+    });
+  }
   // ngAfterViewChecked(): void {
   //   const $ = document.querySelector.bind(document);
   //   const $$ = document.querySelectorAll.bind(document);

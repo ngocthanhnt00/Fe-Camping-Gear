@@ -39,7 +39,7 @@ body {
 }
 
 .component-right {
-  display: none;
+  /* display: none; */
   flex: 1;
   background-color: #fff;
   height: 320px;

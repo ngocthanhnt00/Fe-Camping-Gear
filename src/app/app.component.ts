@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
+import { AuthService } from './services/auth.service';
+import { error } from 'jquery';
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -9,7 +11,7 @@ export class AppComponent {
   isAdminPage = false;
   title = 'project2';
 
-  constructor(private router: Router) {
+  constructor(private authService: AuthService, private router: Router) {
     this.router.events.subscribe((event) => {
       if (event instanceof NavigationEnd) {
 
@@ -19,5 +21,6 @@ export class AppComponent {
       }
     });
   }
+
 
 }

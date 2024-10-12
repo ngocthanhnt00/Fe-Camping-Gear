@@ -4,6 +4,9 @@ import { ModelProducts } from "src/app/models/product";
 import { ModelCategory } from "src/app/models/category";
 import { ProductsService } from 'src/app/services/products.service';
 import { CategoryService } from 'src/app/services/category.service';
+import { CartService } from 'src/app/services/cart.service';
+import { UserSessionService } from 'src/app/services/user-session.service';
+import { HeaderComponent } from '../header/header.component';
 
 @Component({
   selector: 'app-home',
@@ -16,7 +19,7 @@ export class HomeComponent implements OnInit, AfterViewChecked {
   categories!: ModelCategory[];
   viewInitialized = false; // Để kiểm tra view đã được khởi tạo hay chưa
 
-  constructor(private productService: ProductsService, private categoryService: CategoryService, private router: Router) { }
+  constructor(private productService: ProductsService, private header: HeaderComponent, private userSessionService: UserSessionService, private categoryService: CategoryService, private cartService: CartService, private router: Router) { }
 
   ngOnInit() {
     // Call API để lấy danh mục
@@ -84,6 +87,23 @@ export class HomeComponent implements OnInit, AfterViewChecked {
       //   }
       //   listProduct.style.transform = `translateX(-${currentIndex * itemWidth}px)`;
       // });
+    }
+  }
+  addToCart(id: string) {
+    console.log(id, "<<<<");
+    const userExist = localStorage.getItem('user');
+    const user = userExist ? JSON.parse(userExist) : '';
+    if (user && id) {
+      const userId = user._id;
+      const productId = id;
+      const data = { productId, userId };
+      this.cartService.add(data).subscribe((res: any) => {
+        if (res) {
+          this.userSessionService.setSessionCart(res.result2); // Cập nhật giỏ hàng
+          console.log('Res', res);
+          alert('Đã thêm');
+        }
+      });
     }
   }
 

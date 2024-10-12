@@ -8,18 +8,11 @@ import { ApiResponseProduct } from 'src/app/models/product';
 export class ProductsService {
   url = "http://localhost:5032"
   constructor(private httpClient: HttpClient) { }
-  private createHeaders() {
-    return new HttpHeaders({
-      'Authorization': `Bearer ${localStorage.getItem('token')}`, // Example: adding token from localStorage
-      'Content-Type': 'application/json' // Or other necessary headers
-    });
-  }
-  getAll() { // Ensure the return type is Observable<ApiResponse>
-    const headers = this.createHeaders();
-    return this.httpClient.get<ApiResponseProduct>(`${this.url}/products`, { headers })
+  getAll() {
+    return this.httpClient.get<ApiResponseProduct>(`${this.url}/products`, { withCredentials: true })
   }
   get(id: string) {
-    return this.httpClient.get<ApiResponseProduct>(`${this.url}/products/${id}`)
+    return this.httpClient.get<ApiResponseProduct>(`${this.url}/products/${id}`, { withCredentials: true })
   }
   add(product: FormData) {
     return this.httpClient.post<ApiResponseProduct>(`${this.url}/products`, product);

@@ -25,22 +25,32 @@
       </div>
       <div class="item-header">
         <div class="search-input">
-          <input autocomplete="off" type="te-searchxt" name="" id="search-products" placeholder="Tìm kiếm"><i
-            class="fa-solid fa-magnifying-glass" style="color: #000000ce;"></i>
+          <input autocomplete="off" (input)="searchProducts()" [(ngModel)]="keyword" type="te-searchxt" name=""
+            id="search-products" placeholder="Tìm kiếm"><i class="fa-solid fa-magnifying-glass"
+            style="color: #000000ce;"></i>
           <!-- * Search Products -->
           <div class="search-input-product wide">
-            <div class="smart-wrapper-search">
-              <div class="search-left">
-
-
-
-
-
+            <div class=" smart-wrapper-search">
+              <div class="search-left"><span class="quantitySearch">Có
+                  <b>{{searchResults.length}}</b>
+                  sản phẩm phù hợp</span>
+                <div class="item-search" *ngFor="let product of searchResults">
+                  <div class="image-product-search">
+                    <img src="http://localhost:5032/images/{{product.img}}" alt="">
+                  </div>
+                  <div class="infor">
+                    <div class="infor-title">{{product.name}}</div>
+                    <div class="infor-price">
+                      <div class="price-new-search">{{product.priceNew.toLocateString()}}</div>
+                      <div class="price-old-search ">{{product.priceOld.toLocateString()}}</div>
+                    </div>
+                  </div>
+                </div>
               </div>
 
-              <!-- <div class="search-right">
-              <h2>Sản phẩm bạn tìm hiện không tìm thấy</h2>
-                           </div> -->
+              <div class="search-right">
+                <h4>Sản phẩm bạn tìm hiện không tìm thấy</h4>
+              </div>
             </div>
           </div>
           <!-- * End  Search Products -->
@@ -55,7 +65,7 @@
             <img src="./assets/images/give.webp" alt="">
             <span>Khuyến mãi</span>
           </a>
-          <a data-cart-counter="0" routerLink="/cart" class="blog cart" title="Giỏ hàng">
+          <a [attr.data-cart-counter]="cartCounter" routerLink="/cart" class="blog cart" title="Giỏ hàng">
             <img src="https://theme.hstatic.net/200000467803/1000988268/14/icon-cart.svg?v=435" alt="">
             <span>Giỏ hàng</span>
           </a>
@@ -73,7 +83,7 @@
                 <div class="avatar" [ngStyle]="{ 'background-color': getRandomColor() }">
                   {{ getInitials(userName) }}
                 </div>
-                <span>Nguyễn Thanh</span>
+                <span>{{userName}}</span>
                 <div class="dropdown-content">
                   <a class="droplist" href="#">Profile</a>
                   <a class="droplist" href="#">Setting</a>

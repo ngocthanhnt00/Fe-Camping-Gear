@@ -8,10 +8,10 @@ export class CategoryService {
   url = "http://localhost:5032"
   constructor(private httpClient: HttpClient) { }
   getAll() {
-    return this.httpClient.get<ApiResponseCategory>(`${this.url}/category`)
+    return this.httpClient.get<ApiResponseCategory>(`${this.url}/category`, { withCredentials: true })
   }
   get(id: string) {
-    return this.httpClient.get<ApiResponseCategory>(`${this.url}/category/${id}`)
+    return this.httpClient.get<ApiResponseCategory>(`${this.url}/category/${id}`, { withCredentials: true })
   }
   add(category: FormData) { // Change type to FormData
     return this.httpClient.post<ApiResponseCategory>(`${this.url}/category`, category);

@@ -104,8 +104,8 @@
             </div>
             <div class="product-info" [attr.name]="product._id">
               <div class="btn-add">
-                <button click="addToCart(product._id)" class="addCart"><i class="fa-solid fa-cart-shopping fa-lg"
-                    style="color: #fff;"></i></button>
+                <button (click)="addToCart(product._id.toString())" class="addCart"><i
+                    class="fa-solid fa-cart-shopping fa-lg" style="color: #fff;"></i></button>
                 <button click="pretty(product._id)" class="pretty"><i class="fa-solid fa-heart fa-lg"
                     style="color: #fff;"></i></button>
                 <button click="options(product._id)" class="options"><i class="fa-solid fa-gear fa-lg"

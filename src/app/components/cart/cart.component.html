@@ -1,9 +1,74 @@
 <section>
   <div class="full-cart">
     <div class="cart wide">
-      <div data-cart-counter="0" class="title-cart">Giỏ hàng</div>
+      <div data-cart-counter="0" class="title-cart">Giỏ hàng
+        <span class="count">({{carts.length}} sản phẩm)</span>
+      </div>
       <div class="list-cart">
-        <div class="component-left"></div>
+        <div class="component-left">
+          <div *ngFor="let cart of carts" class="cart-item">
+            <div class="component-product">
+              <div class="product_check">
+                <input type="checkbox" name="" id="" data-price="" data-quantity="">
+              </div>
+              <div class="product_image">
+                <a href="#">
+                  <img src="http://localhost:5032/images/{{cart.img}}" alt="">
+                </a>
+              </div>
+              <div class="product_info" data-id="{{cart._id}}">
+                <div (click)="removeItem(cart._id.toString())" class="item_remove">
+                  <span>×</span>
+                </div>
+                <div class="product-relative">
+                  <a href="" title="">{{cart.name}}</a>
+                  <p class="cart-color-item"></p>
+                  <div class="price-prd">
+                    <span>{{cart.priceNew.toLocaleString("vi-VN")}}đ</span>
+                    <del class="false">{{cart.priceOld.toLocaleString("vi-VN")}}đ</del>
+                  </div>
+                </div>
+                <div onclick="clickUpdateQuantity(event)" class="select-quantity">
+                  <div class="button-minus">-</div>
+                  <input onchange="handleInput(this, 2)" id="two-input" value={{cart.ordered}} min="1"
+                    aria-valuemax="50" type="number" name="" class="product-quantity">
+                  <div class="button-maxnus">+</div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!-- <div class="cart-item">
+            <div class="component-product">
+              <div class="product_check">
+                <input type="checkbox" name="" id="" data-price="" data-quantity="">
+              </div>
+              <div class="product_image">
+                <a href="#">
+                  <img src="http://localhost:5032/images/MatBan.png" alt="">
+                </a>
+              </div>
+              <div class="product_info" data-id="1">
+                <div onclick="removeItem(1)" class="item_remove">
+                  <span>×</span>
+                </div>
+                <div class="product-relative">
+                  <a href="" title="">MẶT BÀN NHÔM CHO XE KÉO TC02 NATUREHIKE PNH22JU001</a>
+                  <p class="cart-color-item"></p>
+                  <div class="price-prd">
+                    <span>1,256,000đ</span>
+                    <del class="false">1,354,000đ</del>
+                  </div>
+                </div>
+                <div onclick="clickUpdateQuantity(event)" class="select-quantity">
+                  <div class="button-minus">-</div>
+                  <input onchange="handleInput(this, 1)" id="two-input" value="1" min="1" aria-valuemax="50"
+                    type="number" name="" class="product-quantity">
+                  <div class="button-maxnus">+</div>
+                </div>
+              </div>
+            </div>
+          </div> -->
+        </div>
         <div class="component-right">
           <div class="cart-summary">
             <div class="info info-subtotal">
@@ -26,16 +91,16 @@
             <div class="cart-desc-title">Chấp nhận thanh toán</div>
             <div class="desc-pay">
               <div class="pay-item">
-                <img src="./asset/images/cart_pay_1.webp" alt="">
+                <img src="http://localhost:5032/images/cart_pay_1.webp" alt="">
               </div>
               <div class="pay-item">
-                <img src="./asset/images/cart_pay_2.webp" alt="">
+                <img src="http://localhost:5032/images/cart_pay_2.webp" alt="">
               </div>
               <div class="pay-item">
-                <img src="./asset/images/cart_pay_3.webp" alt="">
+                <img src="http://localhost:5032/images/cart_pay_3.webp" alt="">
               </div>
               <div class="pay-item">
-                <img src="./asset/images/cart_pay_4.webp" alt="">
+                <img src="http://localhost:5032/images/cart_pay_4.webp" alt="">
               </div>
             </div>
           </div>

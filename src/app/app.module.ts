@@ -1,7 +1,7 @@
 import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 
 import { BrowserModule } from '@angular/platform-browser';
-import { RouterModule, Routes } from '@angular/router';
+import { RouterModule, Routes, CanActivateFn } from '@angular/router';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
@@ -27,15 +27,17 @@ import { LandingpageComponent } from './components/admin/landingpage/landingpage
 import { JwtHelperService, JWT_OPTIONS } from '@auth0/angular-jwt';
 import { AuthService } from './services/auth.service';
 import { AuthInterceptorService } from './services/auth-interceptor.service';
+import { authGuard } from './services/auth.guard';
+import { UserSessionService } from './services/user-session.service';
 const routes: Routes = [
   { path: 'home', component: HomeComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'cart', component: CartComponent },
-  { path: 'product-detail/:id', component: ProductDetailComponent },
+  { path: 'cart', component: CartComponent, canActivate: [authGuard] },
+  { path: 'product-detail/:id', component: ProductDetailComponent, canActivate: [authGuard] },
   { path: 'products-list', component: ProductsListComponent },
   { path: 'super', component: SuperComponent },
-  { path: 'admin', component: PageAdminComponent, },
+  { path: 'admin', component: PageAdminComponent, canActivate: [authGuard] },
   { path: 'admin1', component: DanhMucComponent, },
   { path: 'admin2', component: SanPhamComponent, },
   { path: '', redirectTo: '/home', pathMatch: 'full' },
@@ -65,12 +67,14 @@ const routes: Routes = [
   ],
   providers: [
     CategoryService,
-    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true },
+    { provide: JWT_OPTIONS, useValue: JWT_OPTIONS },
     JwtHelperService,
+    HeaderComponent,
     ProductsService,
     LoginComponent,
-    AuthService
+    AuthService,
+    UserSessionService
   ],
   bootstrap: [AppComponent]
 })
