@@ -136,7 +136,7 @@ export class SanPhamComponent implements OnInit {
         priceNew: this.selectedProduct.priceNew,
         description: this.selectedProduct.description,
         img: this.selectedProduct.img,
-        nameCategory: this.selectedProduct.categoryId
+        nameCategory: this.selectedProduct.categoryId._id.toString(),
       })
     })
     console.log(this.productFormEdit.value.nameCategory, ">sss")

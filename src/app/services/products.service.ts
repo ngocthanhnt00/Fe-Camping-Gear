@@ -14,6 +14,10 @@ export class ProductsService {
   get(id: string) {
     return this.httpClient.get<ApiResponseProduct>(`${this.url}/products/${id}`, { withCredentials: true })
   }
+  getProductEqualCategory(id: string) {
+    return this.httpClient.get<ApiResponseProduct>(`${this.url}/products/cate/${id}`, { withCredentials: true })
+  }
+
   add(product: FormData) {
     return this.httpClient.post<ApiResponseProduct>(`${this.url}/products`, product);
   }

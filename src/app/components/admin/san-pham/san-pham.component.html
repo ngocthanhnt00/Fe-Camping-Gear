@@ -40,7 +40,7 @@
                 </td>
                 <td>{{product.priceOld.toLocaleString('vi-VN')}}đ</td>
                 <td>{{product.priceNew.toLocaleString('vi-VN')}} đ</td>
-                <td>{{product.categoryId.name}}</td>
+                <td>{{product?.categoryId?.name}}</td>
                 <td>
                   <button (click)="formUpdateProduct(product._id.toString())" style="color: rgb(245 157 57)"
                     class="b~tn btn-primary btn-sm trash delProd" data-id="66a5209b0c3dad28eb54e838" type="button"

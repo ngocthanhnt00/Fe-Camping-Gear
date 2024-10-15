@@ -60,6 +60,7 @@ const routes: Routes = [
     SanPhamComponent,
     SuperComponent,
     LandingpageComponent,
+    QueryCategoryComponent
   ],
   imports: [
     BrowserModule,

@@ -19,7 +19,7 @@ export const adminGuard: CanActivateFn = async (route, state) => {
     if (role == 2) {
       return true
     } else {
-      location.assign("/")
+      // location.assign("/")
       return false
     }
     // return true; // Token hợp lệ, cho phép truy cập
