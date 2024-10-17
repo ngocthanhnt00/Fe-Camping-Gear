@@ -27,7 +27,14 @@
             "styles": [
               "src/styles.css"
             ],
-            "scripts": []
+            "scripts": [],
+            "budgets": [
+              {
+                "type": "all",
+                "maximumWarning": "8kb",
+                "maximumError": "10kb"
+              }
+            ]
           },
           "configurations": {
             "production": {
